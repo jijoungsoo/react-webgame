@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+        <script  type="text/babel">
+            class GuGuDan extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        first: Math.ceil(Math.random()*9),
+                        second: Math.ceil(Math.random()*9),
+                        value:'',
+                        result:''
+                    }
+                }
+
+                onSubmit =(e)=>{
+                    e.preventDefault();
+                    if(parseInt(this.state.value) === this.state.first * this.state.second) {
+                        this.setState({
+                            result:'정답'+this.state.value,
+                            first: Math.ceil(Math.random()*9),
+                            second: Math.ceil(Math.random()*9),
+                            value:'',
+                        });
+
+                        /*위에 꺼랑 아래꺼랑 같은거다. 
+                          아래 처럼 함수로 가능하다.
+                          아래가 이전값을 참조한다는 이미로 조금더 명확하다고 한다.
+                        */
+                        /*
+                        this.setState((prevState)=>{
+                            return {
+                                result:'정답'+prevState.state.value,
+                                first: Math.ceil(Math.random()*9),
+                                second: Math.ceil(Math.random()*9),
+                                value:'',
+                            }
+
+                        })
+                        */
+
+                        this.input.focus();
+                    } else {
+                        this.setState({
+                            result:'땡',
+                            value:'',
+                        });
+                        this.input.focus();
+                    }
+                }
+
+                input;
+
+                onRefInput = (c)=>{this.input = c;}
+                
+
+                render(){
+                    console.log('렌더링');
+                    /*상태가 바뀌면 reder함수만 재 호출된다.*/
+
+                    {/*   jsx  태그에서  중괄호{안에는  javascript를 쓸수있다. */}
+                    return (
+                            <React.Fragment>
+                                <div>{this.state.first}곱하기{this.state.second}는?</div>
+                                <form onSubmit={this.onSubmit}>
+                                    <input ref={this.onRefInput} type="number" value={this.state.value} onChange={(e)=>{this.setState({value: e.target.value})}} />
+                                    {/*input.onchange={(e)=>{console.log(e.target.value)}} javascript의 이것이 위로 바꿨다고 생각하면 편하다. */}
+                                    <button>입력</button> 
+                                </form>
+                                <div>결과:{this.state.result}</div>
+                            </React.Fragment>
+                            )
+
+                }
+            }
+
+        </script>
+
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            ReactDOM.render(
+                <div>
+                <GuGuDan />
+                <GuGuDan />
+                <GuGuDan />
+                </div>,document.querySelector('#root'))
+        </script>
+    </body>
+</html>

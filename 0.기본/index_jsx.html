@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            class LikeButton extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        liked: false
+                    }
+                }
+
+                render(){
+                    return <button type="submit" onClick={()=>{
+                                    console.log('clicked');
+                                    this.setState({liked:true})
+                            }}>
+                            {this.state.liked === true ? '좋아요 누름' : '좋아요'}
+                            </button>
+                }
+                /* react에서는 위와같이 jsx를 쓰는게 지원 하나  js에서는  jsx에서는 지원을 하지 않는다.
+                   그래서 bable이라는 걸 써야한다.
+
+                   jsx의 의미는 javascript와 xml이라는 뜻이라고 한다.
+                   babel을 src를 걸어주고
+                   script에도 type="text/babel" 이라고 적어주어야한다.
+
+                   대분자로 생성하는것은 react 태그라고 생각하고
+                   소문자는 html 태그라고 생각하자.
+
+                   jsx는 createElement라고 보면 된다.
+
+                   babel polyfill   <--최신 함수나 클래스를 쓰고 싶을때
+                   babel-standalone  <-- 최신 문법을 쓰고 싶을때
+                */
+
+            }
+        </script>
+        <script type="text/babel">
+            ReactDOM.render(<div>
+                <LikeButton />
+                <LikeButton />
+                <LikeButton />
+                <LikeButton />
+                </div>,document.querySelector('#root'))
+        </script>
+    </body>
+</html>
